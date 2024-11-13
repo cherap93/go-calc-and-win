@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+	"strings"
 )
 
 // rnd - генератор псевдослучайных чисел
@@ -25,22 +26,27 @@ func input(title string) string {
 	return s
 }
 
+// setEnemyHealth возвращает число - случайное здоровья врага
 func setEnemyHealth() int {
 	return randNum(80, 120)
 }
 
+// getLiteAttack возвращает число легкой атаки
 func getLiteAttack() int {
 	return randNum(2, 5)
 }
 
+// getMidAttack возвращает число средней атаки
 func getMidAttack() int {
 	return randNum(15, 25)
 }
 
+// getHardAttack возвращает число сильной атаки
 func getHardAttack() int {
 	return randNum(30, 40)
 }
 
+// compareValues возвращает bool победу/поражение над врагом
 func compareValues(enemyHealth, userTotalAttack int) bool {
 	pointDifference := enemyHealth - userTotalAttack
 	if pointDifference < 0 {
@@ -49,6 +55,7 @@ func compareValues(enemyHealth, userTotalAttack int) bool {
 	return pointDifference <= 10
 }
 
+// getUserAttack возвращает общее количество урона
 func getUserAttack() int {
 	total := 0
 
@@ -68,11 +75,12 @@ func getUserAttack() int {
 			continue
 		}
 		fmt.Println("Количество очков твоей атаки:", attackValue)
-		total += 1
+		total += attackValue
 	}
 	return total
 }
 
+// runGame возаращет true, если юзер хочет сыграть еще раз
 func runGame() bool {
 	enemyHealth := setEnemyHealth()
 	userTotalAttack := getUserAttack()
@@ -84,7 +92,7 @@ func runGame() bool {
 		fmt.Println("В этот раз не повезло :( Бой проигран.")
 	}
 	answer := input("Чтобы сыграть ещё раз, введи букву [y] или [Y]: ")
-	return answer == "Y"
+	return strings.ToUpper(answer) == "Y" || strings.ToUpper(answer) == "У"
 }
 
 func main() {
